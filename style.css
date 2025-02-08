@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:'Courier New', Courier, monospace;
+    font-size: small;
+}
+
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+dialog {
+    margin: auto;
+}
+
+.close-dialog-btn:nth-child(1) {
+    background-color: #fff;
+    width: 30px;
+    border: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
+.container {
+    width: fit-content;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.container > div {
+    background-color: gray;
+    padding: 1rem;
+    height: fit-content;
+    border-radius: 5px;
+}
