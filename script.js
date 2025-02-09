@@ -1,4 +1,4 @@
-const newBookBtn = document.querySelector('.new-book');
+const newBookBtn = document.querySelectorAll('.new-book-btn');
 const container = document.querySelector('.container');
 const dialog = document.querySelector('dialog');
 const closeBtn = document.querySelector('.close-dialog-btn');
@@ -39,7 +39,7 @@ function displayBooks() {
     })
     library.forEach((item) => {
         const bookEl = document.createElement('div');
-        bookEl.classList.add('book-card');
+        bookEl.classList.add('book');
         bookEl.innerHTML = `
         <h2 class='book-header'>${item.title}</h2>
         <p class='author'>${item.author}</p>
@@ -47,14 +47,17 @@ function displayBooks() {
         <p class='category'>Category: ${item.category}</p>
         <p class='pages'>${item.pages} pages.</p>
         <p class='summary'>${item.summary}</p>
-        <p class='date-added'>Updated on ${item.dateAdded}</p>
+        <div class='book-footer'>
+            <p class='date-added'>Updated on ${item.dateAdded}</p>
+            <button type="button" class="remove">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>remove</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
+            </button>
+        </div>
         `
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
-        editBtn.classList.add('edit');
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'remove';
-        bookEl.append(editBtn, removeBtn);
+        // const editBtn = document.createElement('button');
+        // editBtn.textContent = 'Edit';
+        // editBtn.classList.add('edit');
+        // bookEl.appendChild(editBtn);
         container.appendChild(bookEl);
     })
 }
@@ -69,8 +72,10 @@ function resetForm() {
     summaryInput.value = '';
 }
 
-newBookBtn.addEventListener('click', () => {
-    dialog.showModal();
+newBookBtn.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        dialog.showModal();
+    })
 })
 
 closeDialogBtn.forEach((btn) => {
