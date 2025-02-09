@@ -64,7 +64,7 @@ dialog {
     gap: 10px;
 }
 
-.container > div {
+.container .book {
     background-color: #fefefe;
     padding: 1rem;
     border-left: 6px solid rgb(236, 196, 18);
@@ -75,3 +75,29 @@ dialog {
     justify-content: space-between;
     gap: 5px;
 }
+
+.book-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.book-footer p {
+    font-size: small;
+    color:#777e86;
+    font-weight: 500;
+}
+
+.remove {
+    background: none;
+    width: 30px;
+    height: 30px;
+    border: none;
+    margin-left: auto;
+}
+
+.remove svg {
+    fill: rgb(150, 51, 51);
+}
+
+
