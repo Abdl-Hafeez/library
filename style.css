@@ -76,6 +76,10 @@ dialog {
     gap: 5px;
 }
 
+.book h2 {
+    font-size: 1rem;
+}
+
 .book-footer {
     display: flex;
     align-items: center;
