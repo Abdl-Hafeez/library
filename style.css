@@ -37,7 +37,7 @@ body {
 }
 
 dialog {
-    background: linear-gradient(to bottom, #023e8a, #0077b6, #1d3557);
+    background: linear-gradient(to bottom, #33415c, #5c677d, #7d8597);
     width: 360px;
     margin: auto;
     border: 1px solid #0672d8;
@@ -137,16 +137,23 @@ label {
     font-weight: 500;
 }
 
-.remove {
+.remove, .edit {
     background: none;
     width: 30px;
     height: 30px;
     border: none;
-    margin-left: auto;
 }
 
 .remove svg {
     fill: rgb(150, 51, 51);
+}
+
+.edit {
+    margin-left: auto;
+}
+
+.edit svg {
+    fill: #33415c;
 }
 
 
