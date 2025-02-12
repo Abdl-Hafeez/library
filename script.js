@@ -27,6 +27,14 @@ function Book(title, author, yearOfPub, category, pages, readStatus, summary, da
     this.id = id;
 }
 
+Book.prototype.syncStatus = function (toggle) {
+    if(toggle.checked === true) {
+        this.readStatus = true;
+    } else {
+        this.readStatus = false;
+    }
+}
+
 function createAndAddBookToLibrary(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded) {
     const newBook = new Book(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, bookCounter++);
     library.push(newBook);
@@ -46,7 +54,7 @@ function displayBooks() {
         <div class='book-header'>
              <h2>${item.title}</h2>
                 <label for="${item.id}_" class="switch">
-                    <input type="checkbox" name="" id="${item.id}_" class='check'>
+                    <input type="checkbox" name="" id="${item.id}_" class='check' ${item.readStatus ? "checked" : ''}>
                     <span class="slider"></span>
                 </label>
             </div>
@@ -159,4 +167,16 @@ container.addEventListener("click", function (event) {
             dialog.showModal();
         }       
     }
+
+    const toggleSwitch = event.target.closest('.check');
+    if(toggleSwitch) {
+        const bookCard = event.target.closest('.book');
+        const bookId = parseInt(bookCard.getAttribute('data-id'));
+        const bookToToggle = library.find((book) => book.id === bookId);
+        if(bookToToggle) {
+            bookToToggle.syncStatus(toggleSwitch);
+            console.log(bookToToggle);
+            console.log(bookToToggle.readStatus);
+        }
+    }  
 });
