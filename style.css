@@ -59,6 +59,7 @@ form {
 
 label {
     color: #fefefe;
+    font-weight: 500;
 }
 
 #title, #author, #year-of-pub, #category, #pages, #summary {
@@ -82,20 +83,25 @@ label {
     font-weight: 500;
     width: 60px;
     padding: 0.3rem;
-    
     border: none;
     border-radius: 5px;
 }
 
 .close-dialog-svg {
     background: none;
-    width: 30px;
+    width: 25px;
     border: none;
     position: absolute;
     top: 5px;
     right: 5px;
+    display: flex;
+    align-items: center;
 }
 
+.close-dialog-svg:hover {
+    background: #8a7e78;
+    border-radius: 5px;
+}
 
 .container {
     padding: 2rem;
@@ -117,8 +123,59 @@ label {
     gap: 5px;
 }
 
+.book-header {
+    display: flex;
+}
+
 .book h2 {
     font-size: 1rem;
+}
+
+.switch {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 24px;
+    height: 14px;
+}
+
+.slider {
+    background-color: #d2d2d2;
+    width: 24px;
+    height: 14px;
+    border-radius: 7px;
+    position: relative;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.slider::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+}
+
+.check:checked + .slider {
+    background-color: #ee9b00;
+}
+
+.check:checked + .slider::before {
+    transform: translateX(10px);
+}
+
+.check {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .book .author {
@@ -144,7 +201,15 @@ label {
     border: none;
 }
 
-.remove svg {
+.manual {
+    margin-left: auto;
+}
+
+.remove svg, .edit svg {
+    fill: #33415c;
+}
+
+.remove svg:hover {
     fill: rgb(150, 51, 51);
 }
 
@@ -155,5 +220,7 @@ label {
 .edit svg {
     fill: #33415c;
 }
-
+.edit svg:hover {
+    fill: #5c677d;
+}
 

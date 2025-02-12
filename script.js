@@ -43,7 +43,13 @@ function displayBooks() {
         bookEl.classList.add('book', 'user-book');
         bookEl.setAttribute('data-id', item.id);
         bookEl.innerHTML = `
-        <h2 class='book-header'>${item.title}</h2>
+        <div class='book-header'>
+             <h2>${item.title}</h2>
+                <label for="${item.id}_" class="switch">
+                    <input type="checkbox" name="" id="${item.id}_" class='check'>
+                    <span class="slider"></span>
+                </label>
+            </div>
         <hr>
         <p class='author'>${item.author}</p>
         <p class='year-of-pub'>${item.yearOfPub}</p>
