@@ -81,7 +81,7 @@ label {
 .cancel-and-add  > button {
     font-family: inherit;
     font-weight: 500;
-    width: 60px;
+    width: fit-content;
     padding: 0.3rem;
     border: none;
     border-radius: 5px;
