@@ -99,7 +99,7 @@ addBtn.addEventListener('click', (event) => {
         createAndAddBookToLibrary(titleInput.value, authorInput.value, yearOfPubInput.value, categoryInput.value, pagesInput.value, readStatusInput.checked, summaryInput.value, addedDate);
     } else {
         const bookToUpdate = library.find((book) => {
-            return book.id = editingBookId;
+            return book.id === editingBookId;
         })
         if(bookToUpdate) {
             bookToUpdate.title = titleInput.value;
