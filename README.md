@@ -1,9 +1,4 @@
-# library
-Here's your README in the usual format:  
-
----
-
-# Library  
+# library  
 
 A simple book library app built with JavaScript, HTML, and CSS as part of [The Odin Project](https://www.theodinproject.com/) curriculum.  
 
