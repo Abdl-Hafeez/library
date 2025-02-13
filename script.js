@@ -38,7 +38,6 @@ Book.prototype.syncStatus = function (toggle) {
 function createAndAddBookToLibrary(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded) {
     const newBook = new Book(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, bookCounter++);
     library.push(newBook);
-    console.log(library);
 }
 
 function displayBooks() {
@@ -141,7 +140,6 @@ container.addEventListener("click", function (event) {
         })
         if(bookIndex !== -1) {
             library.splice(bookIndex, 1);
-            console.log(library);
         }
         bookCard.remove();
     }
@@ -175,8 +173,6 @@ container.addEventListener("click", function (event) {
         const bookToToggle = library.find((book) => book.id === bookId);
         if(bookToToggle) {
             bookToToggle.syncStatus(toggleSwitch);
-            console.log(bookToToggle);
-            console.log(bookToToggle.readStatus);
         }
     }  
 });
