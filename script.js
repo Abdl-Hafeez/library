@@ -11,71 +11,86 @@ const summaryInput = document.querySelector('#summary');
 const closeDialogBtn = document.querySelectorAll('.close-dialog-btn');
 const addBtn = document.querySelector('.add');
 
-const library = [];
-let bookCounter = 1;
 let editingBookId = null;
 
-function Book(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, id) {
-    this.title = title;
-    this.author = author;
-    this.yearOfPub = yearOfPub;
-    this.category = category;
-    this.pages = pages;
-    this.readStatus = readStatus;
-    this.summary = summary;
-    this.dateAdded = dateAdded;
-    this.id = id;
-}
-
-Book.prototype.syncStatus = function (toggle) {
-    if(toggle.checked === true) {
-        this.readStatus = true;
-    } else {
-        this.readStatus = false;
+class Book {
+    constructor(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, id) {
+        this.title = title;
+        this.author = author;
+        this.yearOfPub = yearOfPub;
+        this.category = category;
+        this.pages = pages;
+        this.readStatus = readStatus;
+        this.summary = summary;
+        this.dateAdded = dateAdded;
+        this.id = id;
+    }
+    syncStatus(toggle) {
+        if(toggle.checked === true) {
+            this.readStatus = true;
+        } else {
+            this.readStatus = false;
+        }
     }
 }
 
-function createAndAddBookToLibrary(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded) {
-    const newBook = new Book(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, bookCounter++);
-    library.push(newBook);
+class Library {
+    constructor() {
+        this.books = [];
+        this.bookCounter = 1;
+    }
+    createAndAddBookToLibrary(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded) {
+        const newBook = new Book(title, author, yearOfPub, category, pages, readStatus, summary, dateAdded, this.bookCounter++);
+        this.books.push(newBook);
+    }
+
+    removeBook(bookId) {
+        this.books = this.books.filter(book => book.id !== bookId);
+    }
+
+    findBook(bookId) {
+        return this.books.find(book => book.id === bookId);
+    }
+
+    displayBooks() {
+        const existingBooks = document.querySelectorAll('.user-book');
+        existingBooks.forEach((element) => {
+            element.remove();
+        })
+        this.books.forEach((item) => {
+            const bookEl = document.createElement('div');
+            bookEl.classList.add('book', 'user-book');
+            bookEl.setAttribute('data-id', item.id);
+            bookEl.innerHTML = `
+            <div class='book-header'>
+                    <h2>${item.title}</h2>
+                    <label for="${item.id}_" class="switch">
+                        <input type="checkbox" name="" id="${item.id}_" class='check' ${item.readStatus ? "checked" : ''}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            <hr>
+            <p class='author'>${item.author}</p>
+            <p class='year-of-pub'>${item.yearOfPub}</p>
+            <p class='category'>Category: ${item.category}</p>
+            <p class='pages'>${item.pages} pages.</p>
+            <p class='summary'>${item.summary}</p>
+            <div class='book-footer'>
+                <p class='date-added'>Updated on ${item.dateAdded}</p>
+                <button type="button" class="edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>
+                </button>
+                <button type="button" class="remove">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>remove</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
+                </button>
+            </div>
+            `
+            container.appendChild(bookEl);
+        });
+    };
 }
 
-function displayBooks() {
-    const existingBooks = document.querySelectorAll('.user-book');
-    existingBooks.forEach((element) => {
-        element.remove();
-    })
-    library.forEach((item) => {
-        const bookEl = document.createElement('div');
-        bookEl.classList.add('book', 'user-book');
-        bookEl.setAttribute('data-id', item.id);
-        bookEl.innerHTML = `
-        <div class='book-header'>
-             <h2>${item.title}</h2>
-                <label for="${item.id}_" class="switch">
-                    <input type="checkbox" name="" id="${item.id}_" class='check' ${item.readStatus ? "checked" : ''}>
-                    <span class="slider"></span>
-                </label>
-            </div>
-        <hr>
-        <p class='author'>${item.author}</p>
-        <p class='year-of-pub'>${item.yearOfPub}</p>
-        <p class='category'>Category: ${item.category}</p>
-        <p class='pages'>${item.pages} pages.</p>
-        <p class='summary'>${item.summary}</p>
-        <div class='book-footer'>
-            <p class='date-added'>Updated on ${item.dateAdded}</p>
-            <button type="button" class="edit">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>edit</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z" /></svg>
-            </button>
-            <button type="button" class="remove">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>remove</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
-            </button>
-        </div>
-        `
-        container.appendChild(bookEl);
-    })
-}
+const library = new Library();
 
 function resetForm() {
     titleInput.value = '';
@@ -109,11 +124,9 @@ addBtn.addEventListener('click', (event) => {
     const addedDate = `${day}-${month}-${year}.`
     event.preventDefault();
     if(editingBookId === null) {
-        createAndAddBookToLibrary(titleInput.value, authorInput.value, yearOfPubInput.value, categoryInput.value, pagesInput.value, readStatusInput.checked, summaryInput.value, addedDate);
+        library.createAndAddBookToLibrary(titleInput.value, authorInput.value, yearOfPubInput.value, categoryInput.value, pagesInput.value, readStatusInput.checked, summaryInput.value, addedDate);
     } else {
-        const bookToUpdate = library.find((book) => {
-            return book.id === editingBookId;
-        })
+        const bookToUpdate = library.findBook(editingBookId);
         if(bookToUpdate) {
             bookToUpdate.title = titleInput.value;
             bookToUpdate.author = authorInput.value;
@@ -125,7 +138,7 @@ addBtn.addEventListener('click', (event) => {
             bookToUpdate.dateAdded = addedDate;
         }
     }
-    displayBooks();
+    library.displayBooks();
     resetForm();
     dialog.close();
 });
@@ -135,22 +148,15 @@ container.addEventListener("click", function (event) {
     if (removeBtn) {
         const bookCard = event.target.closest('.book');
         const bookId = parseInt(bookCard.getAttribute('data-id'));
-        const bookIndex = library.findIndex((book) => {
-            return book.id === bookId;
-        })
-        if(bookIndex !== -1) {
-            library.splice(bookIndex, 1);
-        }
-        bookCard.remove();
+        library.removeBook(bookId);
+        library.displayBooks();
     }
 
     const editBtn = event.target.closest('.edit');
     if(editBtn) {
         const bookCard = event.target.closest('.book');
-        const bookId = parseInt(bookCard.getAttribute('data-id'));
-        const bookToEdit = library.find((book) => {
-            return book.id === bookId;
-        })   
+        const bookId = parseInt(bookCard.getAttribute('data-id')); 
+        const bookToEdit = library.findBook(bookId);
         if(bookToEdit) {
             titleInput.value = bookToEdit.title;
             authorInput.value = bookToEdit.author;
@@ -170,7 +176,7 @@ container.addEventListener("click", function (event) {
     if(toggleSwitch) {
         const bookCard = event.target.closest('.book');
         const bookId = parseInt(bookCard.getAttribute('data-id'));
-        const bookToToggle = library.find((book) => book.id === bookId);
+        const bookToToggle = library.findBook(bookId);
         if(bookToToggle) {
             bookToToggle.syncStatus(toggleSwitch);
         }
