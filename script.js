@@ -150,6 +150,7 @@ container.addEventListener("click", function (event) {
         const bookId = parseInt(bookCard.getAttribute('data-id'));
         library.removeBook(bookId);
         library.displayBooks();
+        bookCard.remove();
     }
 
     const editBtn = event.target.closest('.edit');
